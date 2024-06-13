@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css"
-
+import { genreInfo, genres } from "../Genre";
 
 
 export default function Home() {
@@ -53,19 +53,25 @@ export default function Home() {
             <div className="episode-info">   
                 <h3>{episode.title}</h3>
                 <p className="description">{episode.description}</p>
-                <p>{episode.genre}</p>
+                <p>{genreInfo(episode.genres)}</p>
                 
                 <p>Seasons: {episode.seasons}</p>
             </div>
         </div>
     
     ))
-
-    // console.log(episodes)
+    const genreButtons = Object.keys(genres).map((key) => (
+        <button>{genres[key]}</button>
+    ));
 
 
     return (
+
         <>
+            <div className="genreButton">
+                {genreButtons}
+            </div>
+            
             <div className="episode-list">
                 {episodesElements}
             </div>
