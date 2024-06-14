@@ -1,16 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./Home.css"
-import { genreInfo, genres } from "../Genre";
+import { genreInfo, genresObject } from "../Genre";
 
 
 export default function Home() {
-    const [episodes, setEpisodes] = React.useState([])
+    const [shows, setShows] = React.useState([])
     const [error, setError] = React.useState(null);
     const [loading, setLoading] = React.useState(false)
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const genreFilter = searchParams.get("genres")
 
     React.useEffect(() => {
-        async function fetchEpisodess() {
+        async function fetchShows() {
 
             try {
                 setLoading(true)
@@ -19,7 +22,7 @@ export default function Home() {
                 throw new Error('Data fetching Failed');
                 }
                 const data = await response.json();
-                setEpisodes(data);
+                setShows(data)
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -27,7 +30,7 @@ export default function Home() {
             }
         }
     
-        fetchEpisodess();
+        fetchShows();
     }, []);
 
     if (loading) {
@@ -39,41 +42,52 @@ export default function Home() {
     }
 
 
+    const displayedShows = genreFilter
+    ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
+    : shows;
 
-    console.log(episodes.genres)
+    console.log(genreFilter)
 
-    const episodesElements = episodes.sort((a, b) => a.title.localeCompare(b.title)).map(episode => (
-        <div key={episode.id} className="episode-tile">
+    const showsElements = displayedShows.sort((a, b) => a.title.localeCompare(b.title)).map((show, index) => (
+        <div key={show.id} className="show-tile">
             <Link
-                to={episode.id}
+                to={show.id}
             >
-                <img src={episode.image} />
+                <img src={show.image} />
               
             </Link>
-            <div className="episode-info">   
-                <h3>{episode.title}</h3>
-                <p className="description">{episode.description}</p>
-                <p>{genreInfo(episode.genres)}</p>
+            <div className="show-info">   
+                <h3>{index + 1} {show.title}</h3>
+                {/* <p className="description">{show.description}</p> */}
+                <p>{genreInfo(show.genres)}</p>
                 
-                <p>Seasons: {episode.seasons}</p>
+                <p>Seasons: {show.seasons}</p>
             </div>
         </div>
     
     ))
-    const genreButtons = Object.keys(genres).map((key) => (
-        <button>{genres[key]}</button>
+    const genreButtons = Object.keys(genresObject).map((key) => (
+        <button key={key} 
+            onClick={() => setSearchParams(`?genres=${key}`)}
+            className={`${genreFilter === key ? "selected" : "" }`}
+            >
+          {genresObject[key]}
+        </button>
     ));
 
 
     return (
 
         <>
-            <div className="genreButton">
+            <div className="genre_buttons" >
                 {genreButtons}
+                {   genreFilter ? (
+                    <button onClick={() => setSearchParams("")}>Clear</button>
+                ) : null}
             </div>
             
-            <div className="episode-list">
-                {episodesElements}
+            <div className="show-list">
+                {showsElements}
             </div>
         </>
     )
