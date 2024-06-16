@@ -1,7 +1,12 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import "./Home.css"
+import "./CSS/Home.css"
 import { genreInfo, genresObject } from "../Genre";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 
 export default function Home() {
@@ -9,6 +14,9 @@ export default function Home() {
     const [error, setError] = React.useState(null);
     const [loading, setLoading] = React.useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
+    const [genreSelection, setGenreSelection] = React.useState('');
+    const [sortShows, setSortShows] = React.useState("");
+    // const [sortedShows, setSortedShows] = React.useState([]);
 
     const genreFilter = searchParams.get("genres")
 
@@ -17,7 +25,7 @@ export default function Home() {
 
             try {
                 setLoading(true)
-                const response = await fetch('https://podcast-api.netlify.app');
+                const response = await fetch('https://podcast-api.netlify.app/shows');
                 if (!response.ok) {
                 throw new Error('Data fetching Failed');
                 }
@@ -42,16 +50,48 @@ export default function Home() {
     }
 
 
+    const genreChange = (event) => {
+        setGenreSelection(event.target.value);
+    }
+
+    const sortChange = (event) => {
+        setSortShows(event.target.value)
+        handleSort(event.target.value)
+    };
+
+    const handleSort = (sortType) => {
+        // let sortedShows = [...shows];
+        switch (sortType) {
+            case "A-Z":
+            shows.sort((a, b) => a.title.localeCompare(b.title));
+            break;
+            case "Z-A":
+            shows.sort((a, b) => b.title.localeCompare(a.title));
+            break;
+            case "Newest":
+            shows.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+            break;
+            case "Oldest":
+            shows.sort((a, b) => new Date(a.updated) - new Date(b.updated));
+            break;
+            default:
+            break;
+        }
+        setSortShows(shows);
+    };
+
+
+
     const displayedShows = genreFilter
     ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
     : shows;
 
-    console.log(genreFilter)
 
     const showsElements = displayedShows.sort((a, b) => a.title.localeCompare(b.title)).map((show, index) => (
-        <div key={show.id} className="show-tile">
+        <div key={show.id}  className="show-tile">
             <Link
-                to={show.id}
+                to={`/show/${show.id}`}
+                
             >
                 <img src={show.image} />
               
@@ -66,24 +106,77 @@ export default function Home() {
         </div>
     
     ))
+    
     const genreButtons = Object.keys(genresObject).map((key) => (
-        <button key={key} 
+        <MenuItem key={key} 
             onClick={() => setSearchParams(`?genres=${key}`)}
-            className={`${genreFilter === key ? "selected" : "" }`}
+            className={`${genreFilter === key ? "selected" : "btn" }`}
+            value={key}
             >
           {genresObject[key]}
-        </button>
+        </MenuItem>
     ));
 
 
     return (
 
         <>
-            <div className="genre_buttons" >
-                {genreButtons}
+            <div className="filter_sort" >
+                <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                        <InputLabel id="demo-simple-select-label">Genre</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={genreSelection}
+                            label="Genre"
+                            onChange={genreChange}
+                        >
+                            {genreButtons}
+                            
+                        </Select>
+                    </FormControl>
+                </Box>
+                
                 {   genreFilter ? (
-                    <button onClick={() => setSearchParams("")}>Clear</button>
+                    <button 
+                        onClick={() => {
+                            setSearchParams("")
+                            setGenreSelection("")
+                        }}
+                        className="clear-button"
+                    >Clear</button>
                 ) : null}
+
+                <div className="sort-shows-div">
+                    <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={sortShows}
+                                label="Sort"
+                                onChange={sortChange}
+                            >
+                                <MenuItem value="A-Z">A-Z</MenuItem>
+                                <MenuItem value="Z-A">Z-A</MenuItem>
+                                <MenuItem value="Newest">Newest</MenuItem>
+                                <MenuItem value="Oldest">Oldest</MenuItem>
+                                
+                            </Select>
+                        </FormControl>
+                    </Box>
+
+                    {   sortShows ? (
+                    <button 
+                        onClick={() => {
+                            setSortShows("")
+                        }}
+                        className="clear-button"
+                    >Clear</button>
+                ) : null}
+                </div>
             </div>
             
             <div className="show-list">
