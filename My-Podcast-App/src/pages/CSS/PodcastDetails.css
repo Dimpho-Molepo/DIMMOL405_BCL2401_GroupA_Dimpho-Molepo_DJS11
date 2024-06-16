@@ -1,0 +1,67 @@
+.selected-show {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 2rem;
+    margin-bottom: 5rem;
+    border: 0.1rem black solid;
+}
+
+.selected-show img {
+    width: 30%;
+}
+
+.selected-show_info {
+    display: flex;
+    flex-direction: column;
+}
+
+.season-tile {
+    border: 0.1rem blueviolet solid;
+}
+
+
+.episode-tile {
+    border: 0.1rem rgb(26, 255, 0) solid;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    position: relative;
+    width: ;
+    display: flex;
+
+}
+
+.image-container {
+    position: relative; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    width: 5rem;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    padding: 0.4rem;
+    border-radius: 0.8rem;
+    border: none !important;
+    /* background-color: none; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-image {
+    width: 5rem;
+    object-fit: cover;
+}
+
+.like-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    
+}
