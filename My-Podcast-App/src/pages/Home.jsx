@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export default function Home() {
@@ -42,7 +43,7 @@ export default function Home() {
     }, []);
 
     if (loading) {
-        return <h1 aria-live="polite">Loading...</h1>
+        return <h1 aria-live="polite"><CircularProgress /></h1>
     }
     
     if (error) {
@@ -97,7 +98,7 @@ export default function Home() {
               
             </Link>
             <div className="show-info">   
-                <h3>{index + 1} {show.title}</h3>
+                <h3>{index + 1}. {show.title}</h3>
                 {/* <p className="description">{show.description}</p> */}
                 <p>{genreInfo(show.genres)}</p>
                 
