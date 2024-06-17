@@ -1,0 +1,79 @@
+header {
+  height: 5.8rem;
+  /* width: 100vh; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #146b8d;
+  opacity: 0.95;
+  position: sticky;
+  top: 0;
+  /* left: 0; */
+  margin-bottom: 2.5rem;
+  /* margin: 0; */
+  /* margin-left: 0; */
+  z-index: 9999;
+}
+
+.site-logo {
+  width: 15%;
+  margin-left: 2rem;
+
+}
+
+nav {
+  margin-right: 2.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #4d4d4d;
+  font-weight: 600;
+  padding: 5px 20px;
+}
+
+nav a:hover {
+  color: #161616;
+  text-decoration: underline;
+}
+
+.archive,
+.favourites {
+  color: #011627;
+  font-size: 2rem;
+}
+
+.archive:hover,
+.favourites:hover{
+  color: #a39b9c;
+}
+
+.archive:active {
+
+}
+
+.css-1orzy9s {
+  color: #3a3f4a;
+ 
+}
+
+.css-1776fzg-MuiInputBase-root{
+  /* background-color: #d0c2c2; */
+  border: #011627;
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  /* background-color: rgb(223, 11, 11); */
+  border: #011627;
+}
+
+.css-1iz4iln{
+  /* background: red; */
+  border: #011627;
+}
+
+header div {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+}

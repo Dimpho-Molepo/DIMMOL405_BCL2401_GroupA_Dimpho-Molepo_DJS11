@@ -1,10 +1,12 @@
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
-// import { RxAvatar } from "react-icons/rx";
-import "./Header.css"
+import "./CSS/Header.css"
 import logo from "../assets/Podcast-Logo2.svg"
-import { FiSearch } from "react-icons/fi";
 import { MdFavorite } from "react-icons/md";
+import { IconContext } from "react-icons";
+import { FaArchive } from "react-icons/fa";
+import Search from "../components/Search"
+
 
 export default function Header() {
     const activeStyles = {
@@ -18,32 +20,33 @@ export default function Header() {
             <Link  to="/">
                 <img className="site-logo" src={logo} alt="" />
             </Link>
-            <nav>
-                {/* <NavLink
-                    to="/host"
-                    style={({ isActive }) => isActive ? activeStyles : null}
-                >
-                    Home
-                </NavLink> */}
+
+            <div>
+                
+                <Search/>
+
+                <nav>
+
                 <NavLink
                     to="/Favourites"
                     style={({ isActive }) => isActive ? activeStyles : null}
                 >
-                    <FiSearch />
-                    Search
+                    <MdFavorite className="favourites" />
+                   
                 </NavLink>
+
                 <NavLink
-                    to="/vans"
+                    to="/History"
                     style={({ isActive }) => isActive ? activeStyles : null}
                 >
-                    <MdFavorite />
-                    Favourites
+                    <FaArchive  className="archive"/>
+                    
                 </NavLink>
-                {/* <Link to="login" className="login-link">
-                    <RxAvatar className="login-icon"/>
-                </Link> */}
 
-            </nav>
+                </nav>
+            </div>
+            
+            
         </header>
     )
 }
