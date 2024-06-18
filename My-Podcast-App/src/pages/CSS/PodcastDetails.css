@@ -6,10 +6,6 @@
     border: 0.1rem black solid;
 }
 
-.selected-show img {
-    width: 30%;
-}
-
 .selected-show_info {
     display: flex;
     flex-direction: column;
@@ -18,7 +14,6 @@
 .season-tile {
     border: 0.1rem blueviolet solid;
 }
-
 
 .episode-tile {
     border: 0.1rem rgb(26, 255, 0) solid;
@@ -51,6 +46,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: aqua;
 }
 
 .play-image {
@@ -58,10 +54,25 @@
     object-fit: cover;
 }
 
-.like-button {
+.details--podcast-favourite {
     position: absolute;
     top: 0;
     right: 0;
     cursor: pointer;
     
+}
+
+.loader {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+}
+
+.selected-show-image {
+    max-width: 300px;
+    height: auto;   
+}
+
+.season-tile-image {
+    max-width: 100px;
 }
