@@ -43,7 +43,7 @@ export default function Home() {
     }, []);
 
     if (loading) {
-        return <h1 aria-live="polite"><CircularProgress /></h1>
+        return <CircularProgress className="loader"/>
     }
     
     if (error) {
@@ -61,24 +61,24 @@ export default function Home() {
     };
 
     const handleSort = (sortType) => {
-        // let sortedShows = [...shows];
+        let sortedShows = [...shows];
         switch (sortType) {
             case "A-Z":
-            shows.sort((a, b) => a.title.localeCompare(b.title));
-            break;
+                shows.sort((a, b) => a.title.localeCompare(b.title));
+                break;
             case "Z-A":
-            shows.sort((a, b) => b.title.localeCompare(a.title));
-            break;
+                shows.sort((a, b) => b.title.localeCompare(a.title));
+                break;
             case "Newest":
-            shows.sort((a, b) => new Date(b.updated) - new Date(a.updated));
-            break;
+                shows.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+                break;
             case "Oldest":
-            shows.sort((a, b) => new Date(a.updated) - new Date(b.updated));
-            break;
+                shows.sort((a, b) => new Date(a.updated) - new Date(b.updated));
+                break;
             default:
-            break;
+                break;
         }
-        setSortShows(shows);
+        setSortShows(sortedShows);
     };
 
 
@@ -87,22 +87,28 @@ export default function Home() {
     ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
     : shows;
 
+     let showsToDisplay = displayedShows;
+  if (sortShows) {
+    showsToDisplay = sortedShows;
+  }
 
     const showsElements = displayedShows.sort((a, b) => a.title.localeCompare(b.title)).map((show, index) => (
         <div key={show.id}  className="show-tile">
-            <Link
-                to={`/show/${show.id}`}
+            <div className="show-tile-item">
+                <Link
+                    to={`/show/${show.id}`}
+                    
+                >
+                    <img src={show.image} />
                 
-            >
-                <img src={show.image} />
-              
-            </Link>
-            <div className="show-info">   
-                <h3>{index + 1}. {show.title}</h3>
-                {/* <p className="description">{show.description}</p> */}
-                <p>{genreInfo(show.genres)}</p>
-                
-                <p>Seasons: {show.seasons}</p>
+                </Link>
+                <div className="show-info">   
+                    <h3 className="show-name">{index + 1}. {show.title}</h3>
+                    {/* <p className="description">{show.description}</p> */}
+                    <p className="show-genre">{genreInfo(show.genres)}</p>
+                    
+                    <p className="show-seasons">Seasons: {show.seasons}</p>
+                </div>
             </div>
         </div>
     
