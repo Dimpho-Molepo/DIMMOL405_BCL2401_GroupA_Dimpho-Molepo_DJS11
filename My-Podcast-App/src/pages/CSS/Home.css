@@ -1,26 +1,73 @@
-.show-tile {
-    display: flex;
+.show-list{
+    /* display: flex; */
     /* width: 50%; */
     /* height: 10%; */
     margin-bottom: 2rem;
-    gap: 0.5rem;
+    /* gap: 0.5rem; */
+    /* flex-direction: column; */
+
+    display: grid;
+    grid-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: auto;
+    
 }
 
-img {
-    width: 15rem;
-    /* height: 100%; */
-    object-fit: cover;
+.show-tile{
+    /* border: 0.2rem solid#93dbef; */
+    box-shadow: 1px 9px 19px -1px rgba(7,6,6,0.75);
+    -webkit-box-shadow: 1px 9px 19px -1px rgba(7,6,6,0.75);
+    -moz-box-shadow: 1px 9px 19px -1px rgba(7,6,6,0.75);
+    transition: transform .2s; 
     border-radius: 0.5rem;
-
 }
+
+.show-tile:hover {
+    transform: scale(1.15);
+}
+
+.show-tile img {
+    /* width: 15rem; */
+    /* height: 100%; */
+    /* object-fit: cover; */
+    border-radius: 0.5rem;
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+}
+
+.show-tile-item {
+    position: relative;
+    overflow: hidden;
+}
+
 
 .show-info {
-    display: flex;
+    /* display: flex; */
     flex-direction: column;
     /* gap: .5rem; */
-    
+    /* display: flex; */
+    /* justify-content: center;
+    align-items: center;
+    align-self: center; */
 
 }
+
+.show-name,
+.show-genre,
+.show-seasons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.show-name {
+    color: #46515b;
+}
+
 
 .description {
     overflow: hidden;
@@ -73,3 +120,10 @@ img {
 #demo-simple-select-label {
     height: 2rem;
 }
+
+.loader {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+}
+
