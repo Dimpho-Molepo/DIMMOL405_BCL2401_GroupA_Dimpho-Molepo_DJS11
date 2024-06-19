@@ -156,15 +156,22 @@ export default function PodcastDetails() {
 
     return (
         <>
+            <Link to="/" className="back-to-home">
+                <FaArrowLeft/> Back
+            </Link>
+            
             <div key={selectedShow.id} className="selected-show">
-                <img src={selectedShow.image} alt="" className="selected-show-image"/>
-                
+                <div className="selected-show-image">
+                    <img src={selectedShow.image} alt={selectedShow.title} 
+                        className="selected-show-image"/>
+                </div>
                 <div className="selected-show_info">
-                    <h1>{selectedShow.title}</h1>
-                    <p>{selectedShow.description}</p>
-                    <p>{new Date(selectedShow.updated).toLocaleDateString()}</p>
+                    <h1 >{selectedShow.title}</h1>
+                    <p className="description">{selectedShow.description}</p>
+                    <p className="date">{new Date(selectedShow.updated).toLocaleDateString()}</p>
                 </div>
             </div>
+
 
             <Box sx={{ minWidth: 120, marginTop: 2 }} className="drop-down">
                 <FormControl fullWidth>
