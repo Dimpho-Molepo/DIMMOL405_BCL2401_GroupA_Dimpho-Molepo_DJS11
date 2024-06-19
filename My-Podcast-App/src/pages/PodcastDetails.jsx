@@ -159,7 +159,7 @@ export default function PodcastDetails() {
             <Link to="/" className="back-to-home">
                 <FaArrowLeft/> Back
             </Link>
-            
+
             <div key={selectedShow.id} className="selected-show">
                 <div className="selected-show-image">
                     <img src={selectedShow.image} alt={selectedShow.title} 
@@ -197,14 +197,15 @@ export default function PodcastDetails() {
             )}
 
         
-            <AudioPlayer
+           <AudioPlayer
                 audioSrc={currentEpisode.file}
-                selectedPodcast={selectedShow.title}
+                selectedPodcast={selectedShow}
                 episodeName={currentEpisodeName}
                 currentPlayingEpisodeName={currentEpisodeName}
                 currentPodcastImg={currentPodcastImg}
                 setCurrentPlayingEpisodeId={setCurrentEpisode}
                 audioRef={audioRef} 
+                isPlaying={isPlaying}
             />
        
         </>
