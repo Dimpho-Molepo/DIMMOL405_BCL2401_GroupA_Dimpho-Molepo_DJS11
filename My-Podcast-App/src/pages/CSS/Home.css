@@ -6,10 +6,15 @@
     /* gap: 0.5rem; */
     /* flex-direction: column; */
 
-    display: grid;
-    grid-gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    /* flex-direction: column; */
+    /* width: 10rem; */
+    /* grid-gap: 2rem;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    grid-auto-rows: auto;
+    grid-auto-rows: auto; */
     
 }
 
@@ -20,6 +25,12 @@
     -moz-box-shadow: 1px 9px 19px -1px rgba(7,6,6,0.75);
     transition: transform .2s; 
     border-radius: 0.5rem;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    /* border-radius: 8px; */
+    overflow: hidden;
+    width: 18rem;
+    /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
 }
 
 .show-tile:hover {
@@ -30,10 +41,10 @@
     /* width: 15rem; */
     /* height: 100%; */
     /* object-fit: cover; */
-    border-radius: 0.5rem;
+    /* border-radius: 0.5rem; */
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     aspect-ratio: 1 / 1;
     object-fit: cover;
     object-position: center;
@@ -53,21 +64,35 @@
     /* justify-content: center;
     align-items: center;
     align-self: center; */
-
+    text-align: center;
 }
 
-.show-name,
+/* .show-name,
 .show-genre,
 .show-seasons {
     display: flex;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .show-name {
     color: #46515b;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 16px;
 }
 
+.show-genre {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.show-updated,
+.show-seasons {
+    font-size: 14px;
+    color: #888;
+}
 
 .description {
     overflow: hidden;
@@ -83,6 +108,7 @@
     gap: 0.5rem;
     margin-bottom: 2.5em;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* .btn {
@@ -107,14 +133,23 @@
 
 
 .clear-button {
-    padding: 0.8rem;
-    border-radius: 1em;
+    background-color: #f44336;
+    color: white;
     border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.clear-button:hover {
+    background-color: #d32f2f;
 }
 
 .sort-shows-div {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 #demo-simple-select-label {
