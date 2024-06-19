@@ -15,8 +15,8 @@ export default function Home() {
     const [error, setError] = React.useState(null);
     const [loading, setLoading] = React.useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
-    const [genreSelection, setGenreSelection] = React.useState('');
-    const [sortShows, setSortShows] = React.useState("");
+    const [genreSelection, setGenreSelection] = React.useState("");
+    const [sortShows, setSortShows] = React.useState("A-Z");
     const [sortedShows, setSortedShows] = React.useState([]);
 
     const genreFilter = searchParams.get("genres")
@@ -25,18 +25,19 @@ export default function Home() {
         async function fetchShows() {
 
             try {
-                setLoading(true)
-                const response = await fetch('https://podcast-api.netlify.app/shows');
+                setLoading(true);
+                const response = await fetch("https://podcast-api.netlify.app/shows");
                 if (!response.ok) {
-                throw new Error('Data fetching Failed');
+                  throw new Error("Data fetching Failed");
                 }
                 const data = await response.json();
-                setShows(data)
-            } catch (error) {
+                setShows(data);
+                setSortedShows(data);
+              } catch (error) {
                 setError(error.message);
-            } finally {
-                setLoading(false)
-            }
+              } finally {
+                setLoading(false);
+              }
         }
     
         fetchShows();
@@ -85,13 +86,13 @@ export default function Home() {
 
 
 
-    const displayedShows = genreFilter
-    ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
-    : shows;
+    // const displayedShows = genreFilter
+    // ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
+    // : shows;
 
-    const showsToDisplay = sortShows ? sortedShows : displayedShows;
+    // const showsToDisplay = sortShows ? sortedShows : displayedShows;
 
-    const showsElements = displayedShows.sort((a, b) => a.title.localeCompare(b.title)).map((show, index) => (
+    const showsElements = sortedShows.map((show, index) => (
         <div key={show.id}  className="show-tile">
             <div className="show-tile-item">
                 <Link
