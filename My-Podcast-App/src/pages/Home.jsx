@@ -17,7 +17,7 @@ export default function Home() {
     const [searchParams, setSearchParams] = useSearchParams()
     const [genreSelection, setGenreSelection] = React.useState('');
     const [sortShows, setSortShows] = React.useState("");
-    // const [sortedShows, setSortedShows] = React.useState([]);
+    const [sortedShows, setSortedShows] = React.useState([]);
 
     const genreFilter = searchParams.get("genres")
 
@@ -53,6 +53,7 @@ export default function Home() {
 
     const genreChange = (event) => {
         setGenreSelection(event.target.value);
+        
     }
 
     const sortChange = (event) => {
@@ -61,7 +62,7 @@ export default function Home() {
     };
 
     const handleSort = (sortType) => {
-        let sortedShows = [...shows];
+        let sorted = [...shows];
         switch (sortType) {
             case "A-Z":
                 shows.sort((a, b) => a.title.localeCompare(b.title));
@@ -76,9 +77,10 @@ export default function Home() {
                 shows.sort((a, b) => new Date(a.updated) - new Date(b.updated));
                 break;
             default:
+                sorted = [...shows];
                 break;
         }
-        setSortShows(sortedShows);
+        setSortedShows(sorted);
     };
 
 
@@ -87,10 +89,7 @@ export default function Home() {
     ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
     : shows;
 
-     let showsToDisplay = displayedShows;
-  if (sortShows) {
-    showsToDisplay = sortedShows;
-  }
+    const showsToDisplay = sortShows ? sortedShows : displayedShows;
 
     const showsElements = displayedShows.sort((a, b) => a.title.localeCompare(b.title)).map((show, index) => (
         <div key={show.id}  className="show-tile">
@@ -131,10 +130,10 @@ export default function Home() {
             <div className="filter_sort" >
                 <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Genre</InputLabel>
+                        <InputLabel id="genre-select-label">Genre</InputLabel>
                         <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
+                            labelId="genre-select-label"
+                            id="genre-select"
                             value={genreSelection}
                             label="Genre"
                             onChange={genreChange}
@@ -158,10 +157,10 @@ export default function Home() {
                 <div className="sort-shows-div">
                     <Box sx={{ minWidth: 120 }}>
                         <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Sort</InputLabel>
+                        <InputLabel id="sort-select-label">Sort</InputLabel>
                             <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
+                                labelId="sort-select-label"
+                                id="sort-select"
                                 value={sortShows}
                                 label="Sort"
                                 onChange={sortChange}
@@ -179,6 +178,7 @@ export default function Home() {
                     <button 
                         onClick={() => {
                             setSortShows("")
+                            setSortedShows(shows)
                         }}
                         className="clear-button"
                     >Clear</button>
