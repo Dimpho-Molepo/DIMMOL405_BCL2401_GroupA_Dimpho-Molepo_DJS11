@@ -89,17 +89,24 @@ export default function PodcastDetails() {
 
     const handlePlayPause = (episode, season) => {
         if (audioRef.current) {
-            if (isPlaying) {
+            if (isPlaying && currentEpisode.episode === episode.episode) {
                 audioRef.current.pause();
-                setIsPlaying(false);
-            } else {
-                audioRef.current.play();
                 setIsPlaying(true);
+            } else {
+                if (currentEpisode.episode !== episode.episode) {
+                    setCurrentEpisode(episode);
+                    setCurrentPodcastImg(season.image);
+                    setCurrentEpisodeName(episode.title);
+                    audioRef.current.src = episode.file;
+                }
+                audioRef.current.play();
+                setIsPlaying(false);
             }
+        } else {
+            setCurrentEpisode(episode);
+            setCurrentPodcastImg(season.image);
+            setCurrentEpisodeName(episode.title);
         }
-        setCurrentEpisode(episode);
-        setCurrentPodcastImg(season.image); // Set the current podcast image
-        setCurrentEpisodeName(episode.title); // Set the current episode name
     };
     
 
