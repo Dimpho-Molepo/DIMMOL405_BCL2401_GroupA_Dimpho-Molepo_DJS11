@@ -1,12 +1,16 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "./CSS/PodcastDetails.css";
-import { FaPlay } from "react-icons/fa";
-import { MdFavorite } from "react-icons/md";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { FaPause } from "react-icons/fa";
+import { FaPlay, FaPause, FaArrowLeft } from "react-icons/fa";
+import { MdFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import CircularProgress from '@mui/material/CircularProgress';
 import AudioPlayer from "../components/AudioPlayer";
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 export default function PodcastDetails() {
     const [loading, setLoading] = React.useState(false);
@@ -61,6 +65,10 @@ export default function PodcastDetails() {
         return <h1>No seasons found</h1>;
     }
 
+    const handleSeasonChange = (event) => {
+        setSelectedSeason(event.target.value);
+    };
+
     const handleFavourite = (episode, episodeTitle) => {
         const storedFaves = JSON.parse(localStorage.getItem("favouriteEpisodes")) || [];
         const isAlreadyFavorite = storedFaves.some(
@@ -109,68 +117,77 @@ export default function PodcastDetails() {
         }
     };
     
+ const selectedSeasonData = selectedShow.seasons.find(season => season.season.toString() === selectedSeason);
 
-    const showElements = selectedShow.seasons.map((season) => (
-        <div key={season.season} className="season-tile">
-        {/* <img src={season.image} className="season-tile-image"/> */}
-        <div className="season-info">
-            <h2>{season.title}</h2>
-            {season.episodes.map((episode) => (
-            <div key={episode.episode} className="episode-tile">
+    const episodeElements = selectedSeasonData ? selectedSeasonData.episodes.map((episode) => (
+        <div key={episode.episode} className="episode-tile">
+            <div className="image-container">
+                <img src={selectedSeasonData.image} alt="" className="play-image" />
 
-                <div className="image-container">
-                    <img src={season.image} alt="" className="play-image" />
-
-                    {isPlaying && currentEpisode.episode === episode.episode ? (
-                        <FaPause 
+                {isPlaying && currentEpisode.episode === episode.episode ? (
+                    <FaPause 
                         className="play-button"
-                        onClick={() => handlePlayPause(episode, season)}
-                        />
-                    ) : (
-                        <FaPlay 
+                        onClick={() => handlePlayPause(episode, selectedSeasonData)}
+                    />
+                ) : (
+                    <FaPlay 
                         className="play-button"
-                        onClick={() => handlePlayPause(episode, season)}
-                        />
-                    )}
-
-                </div>
-
-                <h4>
-                <span>{episode.episode}</span>. {episode.title}
-                </h4>
-                {/* <p>{episode.description}</p> */}
-
-                    
-                {episodeFaves.some(fav => fav.episodeTitle === episode.title) ? (
-                        <MdFavorite
-                            onClick={() => handleFavourite(episode, episode.title)}
-                            className="details--podcast-favourite like"
-                        />
-                    ) : (
-                        <MdOutlineFavoriteBorder
-                            onClick={() => handleFavourite(episode, episode.title)}
-                            className="details--podcast-favourite unlike"
-                        />
-                    )}
-                  
+                        onClick={() => handlePlayPause(episode, selectedSeasonData)}
+                    />
+                )}
             </div>
-            ))}
+
+            <h4>
+                <span>{episode.episode}</span>. {episode.title}
+            </h4>
+            {episodeFaves.some(fav => fav.episodeTitle === episode.title) ? (
+                <MdFavorite
+                    onClick={() => handleFavourite(episode, episode.title)}
+                    className="details--podcast-favourite like"
+                />
+            ) : (
+                <MdOutlineFavoriteBorder
+                    onClick={() => handleFavourite(episode, episode.title)}
+                    className="details--podcast-favourite unlike"
+                />
+            )}
         </div>
-        </div>
-    ));
+    )) : null;
 
     return (
         <>
-        <div key={selectedShow.id} className="selected-show">
-            <img src={selectedShow.image} alt="" className="selected-show-image"/>
-            
-            <div className="selected-show_info">
-                <h1>{selectedShow.title}</h1>
-                <p>{selectedShow.description}</p>
-                <p>{new Date(selectedShow.updated).toLocaleDateString()}</p>
+            <div key={selectedShow.id} className="selected-show">
+                <img src={selectedShow.image} alt="" className="selected-show-image"/>
+                
+                <div className="selected-show_info">
+                    <h1>{selectedShow.title}</h1>
+                    <p>{selectedShow.description}</p>
+                    <p>{new Date(selectedShow.updated).toLocaleDateString()}</p>
+                </div>
             </div>
-        </div>
-        <div className="elements">{showElements}</div>
+
+            <Box sx={{ minWidth: 120, marginTop: 2 }} className="drop-down">
+                <FormControl fullWidth>
+                    <InputLabel id="season-select-label">Season</InputLabel>
+                    <Select
+                        labelId="season-select-label"
+                        id="season-select"
+                        value={selectedSeason}
+                        label="Season"
+                        onChange={handleSeasonChange}
+                    >
+                        {selectedShow.seasons.map(season => (
+                            <MenuItem className="menu-item" key={season.season} value={season.season.toString()}>
+                                {season.title}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Box>
+
+            {selectedSeason && (
+                <div className="elements">{episodeElements}</div>
+            )}
 
         
             <AudioPlayer
