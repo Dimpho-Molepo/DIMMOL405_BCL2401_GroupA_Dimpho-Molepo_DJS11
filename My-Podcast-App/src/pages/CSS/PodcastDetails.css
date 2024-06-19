@@ -1,52 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+
+    background-color: #f9f9f9;
+}
+
 .selected-show {
     display: flex;
-    /* flex-direction: column; */
-    gap: 2rem;
-    margin-bottom: 5rem;
-    border: 0.1rem black solid;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-.selected-show_info {
-    display: flex;
-    flex-direction: column;
-}
-
-.season-tile {
-    border: 0.1rem blueviolet solid;
+.selected-show-div{
+    flex: 1;
+    text-align: center;
 }
 
 .episode-tile {
-    border: 0.1rem rgb(26, 255, 0) solid;
-    border-radius: 2rem;
-    padding: 0.5rem;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
     position: relative;
-    width: ;
-    display: flex;
+}
 
+.selected-show_info {
+    flex: 1;
+}
+
+.selected-show_info h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.date{
+    color: #aaa;
+}
+
+.selected-show_info .description {
+    margin: 10px 0;
+    color: #666;
 }
 
 .image-container {
-    position: relative; 
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    width: 5rem;
 }
 
 .play-button {
     position: absolute;
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%);
+    font-size: 24px;
+    color: white;
     cursor: pointer;
-    padding: 0.4rem;
-    border-radius: 0.8rem;
-    border: none !important;
-    /* background-color: none; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: aqua;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 10px;
 }
 
 .play-image {
@@ -69,10 +87,77 @@
 }
 
 .selected-show-image {
-    max-width: 300px;
-    height: auto;   
+    max-width: 100%;
+    height: auto;  
+    /* width: 150px;
+    height: 150px; */
+    border-radius: 10px;
+    object-fit: cover;
+    margin-right: 20px; 
 }
 
 .season-tile-image {
     max-width: 100px;
+}
+
+.drop-down {
+    margin: 20px;
+    /* background-color: aqua; */
+}
+
+.elements {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px;
+}
+
+.episode-tile h4 {
+    margin: 10px 0 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.details--podcast-favourite {
+    cursor: pointer;
+    font-size: 24px;
+    margin-top: 10px;
+}
+
+.details--podcast-favourite.like {
+    color: red;
+}
+
+.details--podcast-favourite.unlike {
+    color: #ddd;
+}
+
+h1[aria-live="assertive"] {
+    text-align: center;
+    color: red;
+    margin: 50px 0;
+}
+
+.back-to-home {
+    text-decoration: none;
+    color: #333;
+    font-size: large;
+    text-align: center;
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 1.4rem;
+    width: 10vw;
+}
+
+.back-to-home:hover {
+    text-decoration: underline;
+    color: #858585;
+}
+
+.number-of-episodes {
+    display: flex;
+    margin: 10px 0 0;
+    justify-content: center;
+    color: #333;
 }

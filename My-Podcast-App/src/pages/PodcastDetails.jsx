@@ -193,7 +193,12 @@ export default function PodcastDetails() {
             </Box>
 
             {selectedSeason && (
-                <div className="elements">{episodeElements}</div>
+                <>
+                    <h2 className="number-of-episodes">Episodes: {episodeElements.length}</h2>
+                    <div className="elements">
+                        {episodeElements}
+                    </div>
+                </>              
             )}
 
         
