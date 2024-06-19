@@ -13,11 +13,12 @@ export default function PodcastDetails() {
     const [selectedShow, setSelectedShow] = React.useState({});
     const [error, setError] = React.useState(null);
     const [currentEpisode, setCurrentEpisode] = React.useState({});
-    const [isPlaying, setIsPlaying] = React.useState(false); // Add this state variable
+    const [isPlaying, setIsPlaying] = React.useState(false);
     const [currentPodcastImg, setCurrentPodcastImg] = React.useState('');
     const [currentEpisodeName, setCurrentEpisodeName] = React.useState('');
-    const [episodeFaves, setEpisodeFaves] = React.useState([])
-    const audioRef = React.useRef(null)
+    const [episodeFaves, setEpisodeFaves] = React.useState([]);
+    const [selectedSeason, setSelectedSeason] = React.useState('');
+    const audioRef = React.useRef(null);
 
     const params = useParams();
 
@@ -41,6 +42,13 @@ export default function PodcastDetails() {
         fetchSelectedShow();
     }, [params.id]);
 
+    React.useEffect(() => {
+        const storedFaves = JSON.parse(localStorage.getItem("favouriteEpisodes")) || [];
+        if (storedFaves) {
+            setEpisodeFaves(storedFaves);
+        }
+    }, []);
+
     if (loading) {
         return <CircularProgress className="loader"/>
     }
@@ -54,31 +62,30 @@ export default function PodcastDetails() {
     }
 
     const handleFavourite = (episode, episodeTitle) => {
-        const isAlreadyFavorite = episodeFaves.some(
+        const storedFaves = JSON.parse(localStorage.getItem("favouriteEpisodes")) || [];
+        const isAlreadyFavorite = storedFaves.some(
             (item) => item.showId === params.id && item.episodeTitle === episodeTitle
         );
     
         if (isAlreadyFavorite) {
-            setEpisodeFaves((prevFaves) =>
-                prevFaves.filter(
-                    (item) => !(item.showId === params.id && item.episodeTitle === episodeTitle)
-                )
+            const updatedFaves = storedFaves.filter(
+                (item) => !(item.showId === params.id && item.episodeTitle === episodeTitle)
             );
+            setEpisodeFaves(updatedFaves);
+            localStorage.setItem("favouriteEpisodes", JSON.stringify(updatedFaves));
         } else {
-            setEpisodeFaves((prevFaves) => [
-                ...prevFaves,
-                {
-                    showName: selectedShow.title,
-                    episodeTitle: episodeTitle,
-                    showId: params.id,
-                    userId: episode.episode
-                },
-            ]);
+            const newFave = {
+                showName: selectedShow.title,
+                episodeTitle: episodeTitle,
+                showId: params.id,
+                userId: episode.episode
+            };
+            const updatedFaves = [...storedFaves, newFave];
+            setEpisodeFaves(updatedFaves);
+            localStorage.setItem("favouriteEpisodes", JSON.stringify(updatedFaves));
         }
-    
-        localStorage.setItem("favouriteEpisodes", JSON.stringify(episodeFaves));
     };
-    
+
 
     const handlePlayPause = (episode, season) => {
         if (audioRef.current) {
