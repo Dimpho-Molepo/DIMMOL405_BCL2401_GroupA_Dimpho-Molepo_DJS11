@@ -16,7 +16,7 @@ export default function Home() {
     const [loading, setLoading] = React.useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const [genreSelection, setGenreSelection] = React.useState('');
-    const [sortShows, setSortShows] = React.useState("A-Z");
+    const [sortShows, setSortShows] = React.useState("");
     const [sortedShows, setSortedShows] = React.useState([]);
 
     const genreFilter = searchParams.get("genres")
@@ -135,8 +135,8 @@ export default function Home() {
 
         <>
             <div className="filter_sort" >
-                <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
+                <Box sx={{ minWidth: 120 }} >
+                    <FormControl fullWidth className="genre-box">
                         <InputLabel id="genre-select-label">Genre</InputLabel>
                         <Select
                             labelId="genre-select-label"
@@ -156,15 +156,13 @@ export default function Home() {
                         </Select>
                     </FormControl>
                 </Box>
-                
-                {/* { genreFilter } */}
 
                 <div className="sort-shows-div">
 
-                    <button className="sort-button" onClick={() => sortShowsBy("A-Z")}>A-Z</button>
-                    <button className="sort-button" onClick={() => sortShowsBy("Z-A")}>Z-A</button>
-                    <button className="sort-button" onClick={() => sortShowsBy("Newest")}>Newest</button>
-                    <button className="sort-button" onClick={() => sortShowsBy("Oldest")}>Oldest</button>
+                    <button className={`sort-button ${sortShows === "A-Z" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("A-Z")}>A-Z</button>
+                    <button className={`sort-button ${sortShows === "Z-A" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("Z-A")}>Z-A</button>
+                    <button className={`sort-button ${sortShows === "Newest" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("Newest")}>Newest</button>
+                    <button className={`sort-button ${sortShows === "Oldest" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("Oldest")}>Oldest</button>
 
                     {sortShows && (
                         <button
