@@ -2,8 +2,16 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import "./CSS/Search.css";
 
-const Search = () => {
- 
+const Search = ({ onSearch }) => {
+  const [searchPhrase, setSearchPhrase] = React.useState("");
+
+  const handleInputChange = (event) => {
+    const value = event.target.value;
+    setSearchPhrase(value);
+    if (onSearch) {
+      onSearch(value);
+    }
+  };
 
   return (
     <div className="search-container">
@@ -13,6 +21,7 @@ const Search = () => {
         className="search-input"
         placeholder="Search..."
         value={searchPhrase}
+        onChange={handleInputChange}
         aria-label="Search"
       />
     </div>
