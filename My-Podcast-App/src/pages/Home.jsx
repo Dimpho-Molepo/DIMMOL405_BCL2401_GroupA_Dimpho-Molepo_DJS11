@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
+import Search from "../components/Search"
 
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
     const [genreSelection, setGenreSelection] = React.useState('');
     const [sortShows, setSortShows] = React.useState("");
     const [sortedShows, setSortedShows] = React.useState([]);
+    const [searchTerm, setSearchTerm] = React.useState("");
 
     const genreFilter = searchParams.get("genres")
 
@@ -51,6 +53,9 @@ export default function Home() {
         return <h1 aria-live="assertive">There was an error: {error.message}</h1>
     }
 
+    const handleSearch = (value) => {
+        setSearchTerm(value);
+    };
 
     const genreChange = (event) => {
         const selectedGenre = event.target.value;
@@ -91,13 +96,11 @@ export default function Home() {
         setSortShows(sortType);
     };
 
-    // const displayedShows = genreFilter
-    // ? shows.filter(show => show.genres.includes(parseInt(genreFilter)))
-    // : shows;
+    const filteredShows = sortedShows.filter((show) =>
+        show.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-    // const showsToDisplay = sortShows ? sortedShows : displayedShows;
-
-    const showsElements = sortedShows.map((show, index) => (
+    const showsElements = filteredShows.map((show, index) => (
         <div key={show.id}  className="show-tile">
             <div className="show-tile-item">
                 <Link
@@ -135,6 +138,8 @@ export default function Home() {
 
         <>
             <div className="filter_sort" >
+                <Search onSearch={handleSearch} />
+
                 <Box sx={{ minWidth: 120 }} >
                     <FormControl fullWidth className="genre-box">
                         <InputLabel id="genre-select-label">Genre</InputLabel>
@@ -147,8 +152,8 @@ export default function Home() {
                         >
                             <MenuItem 
                                 onClick={() => {
-                                // setSearchParams("")
-                                setGenreSelection("")
+                                setSearchParams("")
+                                // setGenreSelection("")
                                 }} value="All Genres"
                             >All Genres</MenuItem>
                             {genreButtons}
