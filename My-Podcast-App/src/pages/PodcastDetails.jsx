@@ -86,7 +86,9 @@ export default function PodcastDetails() {
                 showName: selectedShow.title,
                 episodeTitle: episodeTitle,
                 showId: params.id,
-                userId: episode.episode
+                userId: episode.episode,
+                seasonImage: selectedSeasonData.image,
+                timeAdded: new Date().toLocaleString()
             };
             const updatedFaves = [...storedFaves, newFave];
             setEpisodeFaves(updatedFaves);
