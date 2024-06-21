@@ -18,7 +18,7 @@ export default function Home() {
     const [loading, setLoading] = React.useState(false)
     const [searchParams, setSearchParams] = useSearchParams()
     const [genreSelection, setGenreSelection] = React.useState('');
-    const [sortShows, setSortShows] = React.useState("");
+    const [sortShows, setSortShows] = React.useState("A-Z");
     const [sortedShows, setSortedShows] = React.useState([]);
     const [searchTerm, setSearchTerm] = React.useState("");
 
@@ -36,6 +36,8 @@ export default function Home() {
                 const data = await response.json();
                 setShows(data);
                 setSortedShows(data);
+                const sortedData = [...data].sort((a, b) => a.title.localeCompare(b.title));
+                setSortedShows(sortedData);
               } catch (error) {
                 setError(error.message);
               } finally {
@@ -97,11 +99,6 @@ export default function Home() {
         setSortShows(sortType);
     };
 
-    const clearSort = () => {
-        setSortShows("");
-        setSortedShows(shows);
-    };
-
     const filteredShows = sortedShows.filter((show) =>
         show.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -139,6 +136,10 @@ export default function Home() {
         </MenuItem>
     ));
 
+    const clearSort = () => {
+        setSortShows("");
+        setSortedShows(shows);
+    };
 
     return (
 
