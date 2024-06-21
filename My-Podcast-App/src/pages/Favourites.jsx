@@ -70,16 +70,16 @@ export default function Favourites() {
     setSortedShows(sorted);
   };
 
-  const clearSort = () => {
-    setSortedShows(favorites);
-    setSortType("");
-  };
+    const clearSort = () => {
+        setSortedShows(favorites);
+        setSortType("");
+    };
 
-  if (loading) {
-    return <CircularProgress className="loader" />;
+    if (loading) {
+        return <CircularProgress className="loader" />;
     }
 
-  const favouriteEpisodesElements = sortedShows.map((favourite) => (
+  const favouriteEpisodesElements = sortedShows.map((favourite, index) => (
     <div
       key={`${favourite.showId}-${favourite.episodeTitle}`}
       className="episode-tile"
@@ -88,7 +88,7 @@ export default function Favourites() {
         <img src={favourite.seasonImage} alt="" className="play-image" />
       </div>
       <h4>
-        <span>{favourite.episode}</span>. {favourite.episodeTitle}
+        <span>{index + 1}</span>. {favourite.episodeTitle}
       </h4>
       {favorites.some((fav) => fav.episodeTitle === favourite.episodeTitle) ? (
         <MdFavorite
@@ -104,6 +104,13 @@ export default function Favourites() {
       <p>{new Date(favourite.timeAdded).toLocaleString()}</p>
     </div>
   ));
+
+  const ClearLocalStorage = () => {
+    const clearFav = [...favorites]
+    localStorage.clear();
+    setFavorites([]);
+    setSortedShows([]);
+  }
 
   return (
     <div>
@@ -121,6 +128,7 @@ export default function Favourites() {
             onClear={clearSort}
           />
           <div className="elements">{favouriteEpisodesElements}</div>
+          <button onClick={ClearLocalStorage} className="clear-button">Rest Favourites</button>
         </>
       )}
     </div>
