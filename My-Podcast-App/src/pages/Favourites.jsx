@@ -4,14 +4,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { FaArrowLeft } from "react-icons/fa";
 import { MdFavorite, MdOutlineFavoriteBorder } from "react-icons/md";
 import SortButtons from "../utils/SortButtons";
+import Search from "../components/Search";
 
 export default function Favourites() {
   const [loading, setLoading] = React.useState(true);
   const [favorites, setFavorites] = React.useState([]);
-  const [isPlaying, setIsPlaying] = React.useState(false);
   const [currentEpisode, setCurrentEpisode] = React.useState(null);
   const [sortedShows, setSortedShows] = React.useState([]);
   const [sortType, setSortType] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   // Fetch favorites from local storage when the component mounts
   React.useEffect(() => {
@@ -70,16 +71,19 @@ export default function Favourites() {
     setSortedShows(sorted);
   };
 
-    const clearSort = () => {
-        setSortedShows(favorites);
-        setSortType("");
-    };
+  const clearSort = () => {
+    setSortedShows(favorites);
+    setSortType("");
+  };
 
-    if (loading) {
-        return <CircularProgress className="loader" />;
-    }
+  if (loading) {
+    return <CircularProgress className="loader" />;
+  }
+  const filteredShows = sortedShows.filter((show) =>
+    show.episodeTitle.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  const favouriteEpisodesElements = sortedShows.map((favourite, index) => (
+  const favouriteEpisodesElements = filteredShows.map((favourite, index) => (
     <div
       key={`${favourite.showId}-${favourite.episodeTitle}`}
       className="episode-tile"
@@ -106,11 +110,15 @@ export default function Favourites() {
   ));
 
   const ClearLocalStorage = () => {
-    const clearFav = [...favorites]
     localStorage.clear();
     setFavorites([]);
     setSortedShows([]);
-  }
+  };
+
+  const handleSearch = (value) => {
+    setSearchTerm(value);
+  };
+  
 
   return (
     <div>
@@ -122,13 +130,19 @@ export default function Favourites() {
         <p>No favorites yet.</p>
       ) : (
         <>
-          <SortButtons 
-            sortShows={sortType}
-            onSortChange={sortShowsBy}
-            onClear={clearSort}
-          />
+          <div className="filter_sort">
+            <Search onSearch={handleSearch} />
+            <SortButtons
+              sortShows={sortType}
+              onSortChange={sortShowsBy}
+              onClear={clearSort}
+            />
+          </div>
+
           <div className="elements">{favouriteEpisodesElements}</div>
-          <button onClick={ClearLocalStorage} className="clear-button">Rest Favourites</button>
+          <button onClick={ClearLocalStorage} className="clear-button">
+            Rest Favourites
+          </button>
         </>
       )}
     </div>
