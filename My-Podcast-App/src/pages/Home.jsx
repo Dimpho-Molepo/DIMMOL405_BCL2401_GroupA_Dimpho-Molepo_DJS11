@@ -10,6 +10,7 @@ import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
 import Search from "../components/Search"
 import SortButtons from "../utils/SortButtons";
+import Carousel from "../components/SlidingCarousel";
 
 
 export default function Home() {
@@ -144,6 +145,7 @@ export default function Home() {
     return (
 
         <>
+            <Carousel shows={showsElements.slice(0, 15)} />
             <div className="filter_sort" >
                 <Search onSearch={handleSearch} />
 
