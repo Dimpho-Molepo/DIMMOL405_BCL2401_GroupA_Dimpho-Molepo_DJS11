@@ -19,7 +19,6 @@ header {
 .site-logo {
   width: 15%;
   margin-left: 2rem;
-
 }
 
 nav {
@@ -48,7 +47,7 @@ nav a:hover {
 }
 
 .archive:hover,
-.favourites:hover{
+.favourites:hover {
   color: #a39b9c;
 }
 
@@ -75,11 +74,9 @@ header div {
   }
 }
 
-
 @media screen and (max-width: 768px) {
   header {
     height: 5rem;
-    
   }
 
   .site-logo {
@@ -94,7 +91,6 @@ header div {
 
   nav {
     order: 3;
-    /* width: 100%; */
     justify-content: center;
     margin-top: 0.5rem;
   }
@@ -116,11 +112,9 @@ header div {
 
   .site-logo {
     width: 20%;
-    /* margin: 0 0 1rem 0; */
   }
 
   nav {
-    /* flex-wrap: wrap; */
     justify-content: center;
   }
 
@@ -133,6 +127,4 @@ header div {
   .favourites {
     font-size: 1.4rem;
   }
-
-  
 }

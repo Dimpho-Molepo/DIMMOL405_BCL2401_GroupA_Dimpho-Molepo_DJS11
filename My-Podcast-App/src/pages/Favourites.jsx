@@ -13,12 +13,11 @@ export default function Favourites() {
   const [sortType, setSortType] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
 
-  // Fetch favorites from local storage when the component mounts
   React.useEffect(() => {
     const favouriteEpisodes =
       JSON.parse(localStorage.getItem("favouriteEpisodes")) || [];
     setFavorites(favouriteEpisodes);
-    setSortedShows(favouriteEpisodes); // Initialize sortedShows with favorites
+    setSortedShows(favouriteEpisodes); 
     setLoading(false);
   }, []);
 
@@ -43,7 +42,7 @@ export default function Favourites() {
             )
         );
         setFavorites(updatedFaves);
-        setSortedShows(updatedFaves); // Update sortedShows after removal
+        setSortedShows(updatedFaves);
         localStorage.setItem("favouriteEpisodes", JSON.stringify(updatedFaves));
       }
     }
