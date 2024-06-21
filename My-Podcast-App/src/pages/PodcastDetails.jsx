@@ -22,7 +22,7 @@ export default function PodcastDetails() {
     const [currentEpisodeName, setCurrentEpisodeName] = React.useState('');
     const [episodeFaves, setEpisodeFaves] = React.useState([]);
     const [selectedSeason, setSelectedSeason] = React.useState('');
-    const audioRef = React.useRef(null);
+    const [showAudioPlayer, setShowAudioPlayer] = React.useState(false);
 
     const params = useParams();
 
@@ -88,7 +88,7 @@ export default function PodcastDetails() {
                 showId: params.id,
                 userId: episode.episode,
                 seasonImage: selectedSeasonData.image,
-                timeAdded: new Date().toLocaleString()
+                timeAdded: new Date().toLocaleString(),
             };
             const updatedFaves = [...storedFaves, newFave];
             setEpisodeFaves(updatedFaves);
@@ -98,25 +98,25 @@ export default function PodcastDetails() {
 
 
     const handlePlayPause = (episode, season) => {
-        if (audioRef.current) {
-            if (isPlaying && currentEpisode.episode === episode.episode) {
-                audioRef.current.pause();
-                setIsPlaying(true);
-            } else {
-                if (currentEpisode.episode !== episode.episode) {
-                    setCurrentEpisode(episode);
-                    setCurrentPodcastImg(season.image);
-                    setCurrentEpisodeName(episode.title);
-                    audioRef.current.src = episode.file;
-                }
-                audioRef.current.play();
-                setIsPlaying(false);
-            }
+        setShowAudioPlayer(true);
+        if (isPlaying && currentEpisode.episode === episode.episode) {
+            // audioRef.current.pause();
+            setIsPlaying(false);
         } else {
-            setCurrentEpisode(episode);
-            setCurrentPodcastImg(season.image);
-            setCurrentEpisodeName(episode.title);
+            if (currentEpisode.episode !== episode.episode) {
+                setCurrentEpisode(episode);
+                setCurrentPodcastImg(season.image);
+                setCurrentEpisodeName(episode.title);
+                // audioRef.current.src = episode.file;
+            }
+            // audioRef.current.play();
+            setIsPlaying(true);
         }
+      
+        setCurrentEpisode(episode);
+        setCurrentPodcastImg(season.image);
+        setCurrentEpisodeName(episode.title);
+        // }\
     };
     
  const selectedSeasonData = selectedShow.seasons.find(season => season.season.toString() === selectedSeason);
@@ -155,6 +155,8 @@ export default function PodcastDetails() {
             )}
         </div>
     )) : null;
+
+    console.log(typeof(currentEpisode.file))
 
     return (
         <>
@@ -204,15 +206,16 @@ export default function PodcastDetails() {
             )}
 
         
-           <AudioPlayer
+            <AudioPlayer
                 audioSrc={currentEpisode.file}
                 selectedPodcast={selectedShow}
-                episodeName={currentEpisodeName}
+                episodeName={selectedShow.title}
                 currentPlayingEpisodeName={currentEpisodeName}
                 currentPodcastImg={currentPodcastImg}
-                setCurrentPlayingEpisodeId={setCurrentEpisode}
-                audioRef={audioRef} 
                 isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+                onClose={() => setShowAudioPlayer(false)}
+                show={showAudioPlayer}
             />
        
         </>
