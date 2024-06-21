@@ -77,7 +77,9 @@ export default function Favourites() {
 
     return (
         <div>
-            
+            <Link to="/" className="back-to-home">
+                <FaArrowLeft /> Back
+            </Link>
             <h1>Favorites List</h1>
             {favorites.length === 0 ? (
                 <p>No favorites yet.</p>
