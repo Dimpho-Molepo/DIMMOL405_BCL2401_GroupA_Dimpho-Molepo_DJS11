@@ -1,129 +1,76 @@
-import React from 'react'
-import "./CSS/AudioPlayer.css";
-import { BsArrowLeftShort } from "react-icons/bs"
-import { BsArrowRightShort } from "react-icons/bs"
-import { FaPlay } from "react-icons/fa"
-import { FaPause } from "react-icons/fa"
+import React, { useState, useRef } from 'react';
+import './CSS/AudioPlayer.css';
 
-export default function AudioPlayer({
-    audioSrc,
-    selectedPodcast,
-    audioRef, 
+export default function AudioPlayer({ 
     episodeName, 
     currentPlayingEpisodeName, 
-    currentPodcastImg,
-    setCurrentPlayingEpisodeId,
-}) {
+    currentPodcastImg, 
+    audioSrc }) {
+const [isPlaying, setIsPlaying] = useState(false);
+const [showConfirm, setShowConfirm] = useState(false);
+const audioRef = useRef(null);
 
-    // state
-    const [isPlaying, setIsPlaying] = React.useState(false);
-    const [duration, setDuration] = React.useState(0);
-    const [currentTime, setCurrentTime] = React.useState(0);
+const togglePlay = () => {
+  if (isPlaying) {
+    audioRef.current.pause();
+  } else {
+    audioRef.current.play();
+  }
+  setIsPlaying(!isPlaying);
+};
 
-    // references
-    const audioPlayer = React.useRef();   // reference our audio component
-    const progressBar = React.useRef();   // reference our progress bar
-    const animationRef = React.useRef();  // reference the animation
+const handleCloseClick = () => {
+  setShowConfirm(true);
+};
 
-    React.useEffect(() => {
-        if (audioRef.current) {
-            const seconds = Math.floor(audioRef.current.duration);
-            setDuration(seconds);
-            progressBar.current.max = seconds;
-        }
-    }, [audioRef?.current?.loadedmetadata, audioRef?.current?.readyState]);
+const handleConfirmClose = () => {
+  // Close the media player here
+  console.log('Media player closed');
+//   audioRef.current.pause();
+  setShowConfirm(false);
+};
 
-    const calculateTime = (secs) => {
-        if (isNaN(secs) || secs === undefined) {
-            return "00:00";
-        }
-        const minutes = Math.floor(secs / 60);
-        const returnedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-        const seconds = Math.floor(secs % 60);
-        const returnedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-        return `${returnedMinutes}:${returnedSeconds}`;
-    }
+const handleCancelClose = () => {
+  setShowConfirm(false);
+};
 
-    const togglePlayPause = () => {
-        const prevValue = isPlaying;
-        setIsPlaying(!prevValue);
-    
-        if (!prevValue) {
-            audioRef.current.play();
-            animationRef.current = requestAnimationFrame(whilePlaying);
-        } else {
-            audioRef.current.pause();
-            cancelAnimationFrame(animationRef.current);
-        }
-    };
-
-    const whilePlaying = () => {
-        const currentValue = audioRef.current.currentTime;
-    
-        if (!isNaN(currentValue)) {
-            progressBar.current.value = currentValue;
-            changePlayerCurrentTime();
-            animationRef.current = requestAnimationFrame(whilePlaying);
-        }
-    };
-
-    const changeRange = () => {
-        audioRef.current.currentTime = progressBar.current.value;
-        changePlayerCurrentTime();
-    };
-
-    const changePlayerCurrentTime = () => {
-        progressBar.current.style.setProperty('--seek-before-width', `${progressBar.current.value / duration * 100}%`)
-        setCurrentTime(progressBar.current.value);
-    }
-
-    const backThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value - 30);
-        changeRange();
-    }
-
-    const forwardThirty = () => {
-        progressBar.current.value = Number(progressBar.current.value + 30);
-        changeRange();
-    }
-
-    return (
-
-        <div className="audio-player">
-
-            <audio 
-                ref={audioRef} 
-                src={audioSrc} 
-                preload="auto" 
-                type="audio/mp3">
-            </audio>
-            <button className="forward-backward" onClick={backThirty}><BsArrowLeftShort /> 30</button>
-            <button onClick={togglePlayPause} className="play-pause">
-                {isPlaying ? <FaPause /> : <FaPlay className="play" />}
-            </button>
-            <button className="forward-backward" onClick={forwardThirty}>30 <BsArrowRightShort /></button>
-
-            {/* current time */}
-            <div className="current-time">{calculateTime(currentTime)}</div>
-
-            {/* progress bar */}
-            <div>
-                <input type="range" className="progress-bar" defaultValue="0" ref={progressBar} onChange={changeRange} />
-            </div>
-
-            {/* duration */}
-            <div className="duration">
-                {(duration && !isNaN(duration)) && calculateTime(duration)}
-            </div>
-
-
-            <div className='audio-player_div'>
-                <img src={currentPodcastImg} alt="" className='audio-player_div'/>
-                <div>
-                <span className="audio-player-title">{selectedPodcast.title}</span>
-                <span className="audio-player-episode">{episodeName}</span>
-                </div>
+  return (
+    <div className={`audio-player`}>
+        <button onClick={handleCloseClick} className="close-btn">
+            &times;
+        </button>
+        <div className="player-info">
+            <img src={currentPodcastImg} alt={`${currentPodcastImg} album cover`} className="album-cover" />
+            <div className="song-details">
+                <h3 className="song-title">{episodeName}</h3>
+                <p className="song-artist">{currentPlayingEpisodeName}</p>
             </div>
         </div>
-    )
-}
+        
+        <div className="player-controls">
+            {/* <button onClick={togglePlay} className="play-btn">
+            {isPlaying ? 'Pause' : 'Play'}
+            </button> */}
+            <audio ref={audioRef} 
+                src={audioSrc} 
+                type="audio/mp3"
+                preload="auto"
+                controls/>
+            {showConfirm && (
+                <div className="confirm-modal">
+                <p>Are you sure you want to close the media player?</p>
+                <div className="confirm-buttons">
+                    <button onClick={handleConfirmClose} className="confirm-btn">
+                    Yes
+                    </button>
+                    <button onClick={handleCancelClose} className="cancel-btn">
+                    No
+                    </button>
+                </div>
+                </div>
+            )}
+        </div>
+    </div>
+  );
+};
+

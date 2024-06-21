@@ -1,161 +1,122 @@
 .audio-player {
-  --primary: #73ec79;
-  --secondary: #2e7473;
-
-  align-items: center;
   display: flex;
-  width: 700px;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.forward-backward {
-  background: none;
-  border: none;
+.player-info {
   display: flex;
   align-items: center;
-  font-family: monospace;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.forward-backward:hover {
-  color: var(--primary);
-}
-
-.play-pause {
-  background: var(--primary);
-  border: none;
-  border-radius: 50%;
-  width: 75px;
-  height: 75px;
-  font-size: 32px;
-  color: var(--secondary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.play {
-  position: relative;
-  left: 5px;
-}
-
-.current-time,
-.duration {
-  font-family: monospace;
-  font-size: 16px;
-}
-
-.current-time {
-  margin-left: 25px;
-}
-
-.progress-bar {
-  --bar-bg: #ffe3d4;
-  --seek-before-width: 0;
-  --seek-before-color: #ffc2a1;
-  --knobby: #3452a5;
-  --selectedKnobby: #26c9c3;
-
-  appearance: none;
-  background: var(--bar-bg);
-  border-radius: 10px;
-  position: relative;
+  justify-content: space-between;
   width: 100%;
-  height: 11px;
-  outline: none;
+  margin-bottom: 1rem;
 }
 
-/* progress bar - safari */
-.progress-bar::-webkit-slider-runnable-track {
-  background: var(--bar-bg);
-  border-radius: 10px;
-  position: relative;
-  width: 100%;
-  height: 11px;
-  outline: none;
-}
-
-/* progress bar - firefox */
-.progress-bar::-moz-range-track {
-  background: var(--bar-bg);
-  border-radius: 10px;
-  position: relative;
-  width: 100%;
-  height: 11px;
-  outline: none;
-}
-
-.progress-bar::-moz-focus-outer {
-  border: 0;
-}
-
-/* progress bar - chrome and safari */
-.progress-bar::before {
-  content: "";
-  height: 11px;
-  width: var(--seek-before-width);
-  background-color: var(--seek-before-color);
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  cursor: pointer;
-}
-
-/* progress bar - firefox */
-.progress-bar::-moz-range-progress {
-  background-color: var(--seek-before-color);
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  height: 11px;
-}
-
-/* knobby - chrome and safari */
-.progress-bar::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--knobby);
-  cursor: pointer;
-  position: relative;
-  margin: -2px 0 0 0;
-  z-index: 3;
-  box-sizing: border-box;
-}
-
-/* knobby while dragging - chrome and safari */
-.progress-bar:active::-webkit-slider-thumb {
-  transform: scale(1.2);
-  background: var(--selectedKnobby);
-}
-
-/* knobby - firefox */
-.progress-bar::-moz-range-thumb {
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  border: transparent;
-  background-color: var(--knobby);
-  cursor: pointer;
-  position: relative;
-  z-index: 3;
-  box-sizing: border-box;
-}
-
-/* knobby while dragging - firefox */
-.progress-bar:active::-moz-range-thumb {
-  transform: scale(1.2);
-  background: var(--selectedKnobby);
-}
-
-.audio-player_div {
-  width: 5rem;
-  height: 5rem;
+.album-cover {
+  width: 64px;
+  height: 64px;
   object-fit: cover;
+  border-radius: 0.25rem;
   margin-right: 1rem;
 }
 
+.song-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.song-title {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.song-artist {
+  font-size: 0.9rem;
+  color: #777;
+  margin: 0;
+}
+
+.close-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #777;
+  cursor: pointer;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.play-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 1rem;
+}
+
+.play-btn:hover {
+  background-color: #0056b3;
+}
+
+.confirm-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.confirm-btn,
+.cancel-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirm-btn {
+  margin-right: 0.5rem;
+}
+
+.confirm-btn:hover {
+  background-color: #0056b3;
+}
+
+.cancel-btn {
+  background-color: #dc3545;
+}
+
+.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+.hide-player {
+  display: none;
+}
