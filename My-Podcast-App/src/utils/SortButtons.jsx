@@ -1,4 +1,3 @@
-// SortButtons.jsx
 import React from 'react';
 
 const SortButtons = ({ sortShows, onSortChange, onClear }) => {

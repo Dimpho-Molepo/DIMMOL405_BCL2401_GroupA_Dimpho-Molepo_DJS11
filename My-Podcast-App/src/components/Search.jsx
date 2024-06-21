@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import "./CSS/Search.css";
 
 const Search = ({ onSearch }) => {
-  const [searchPhrase, setSearchPhrase] = React.useState("");
+  const [searchPhrase, setSearchPhrase] = useState("");
 
   const handleInputChange = (event) => {
     const value = event.target.value;
