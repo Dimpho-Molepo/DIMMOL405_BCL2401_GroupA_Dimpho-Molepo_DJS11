@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-
     background-color: #ebe8dd;
 }
 
@@ -161,4 +160,124 @@ h1[aria-live="assertive"] {
     margin: 10px 0 0;
     justify-content: center;
     color: #333;
+}
+
+
+/* Media Queries */
+@media screen and (max-width: 1200px) {
+    .elements {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+
+    .description {
+        margin: 10px 0;
+        color: #666;
+        font-size: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 992px) {
+    .selected-show {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .selected-show-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .elements {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .selected-show_info h1 {
+        font-size: 24px;
+    }
+
+    .selected-show-image {
+        width: 70%;
+        align-self: center;
+    }
+
+    .elements {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+    }
+
+    .episode-tile {
+        padding: 15px;
+    }
+
+    .play-button {
+        font-size: 20px;
+        padding: 8px;
+    }
+
+    .back-to-home {
+        width: auto;
+        margin-left: 20px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .selected-show_info {
+        width: 100%;
+    }
+
+    .description {
+        max-width: fit-content;
+    }
+
+    .selected-show, .drop-down, .elements {
+        margin: 10px;
+    }
+
+    .selected-show_info h1 {
+        font-size: 20px;
+    }
+
+    .elements {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+
+    .episode-tile {
+        padding: 10px;
+    }
+
+    .episode-tile h4 {
+        font-size: 14px;
+    }
+
+    .play-button {
+        font-size: 18px;
+        padding: 6px;
+    }
+
+    .play-image {
+        width: 4rem;
+    }
+
+    .details--podcast-favourite {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .elements {
+        grid-template-columns: 1fr;
+    }
+
+    .selected-show_info h1 {
+        font-size: 18px;
+    }
+
+    .back-to-home {
+        font-size: medium;
+    }
+
 }

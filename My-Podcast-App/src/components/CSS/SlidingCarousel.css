@@ -69,6 +69,10 @@
     height: 300px;
   }
 
+  .slide-direction {
+    margin: 0 auto;
+  }
+
   .carousel-item{
     height: fit-content;
   }
@@ -76,7 +80,11 @@
 
 @media screen and (max-width: 480px) {
   .carousel {
-    height: 200px;
+    height: 300px;
+  }
+
+  .slide-direction {
+    margin-left: -.5rem;
   }
 
   .carousel-item{

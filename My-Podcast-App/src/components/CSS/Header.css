@@ -12,6 +12,10 @@ header {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.home-link {
+  width: rem;
+}
+
 .site-logo {
   width: 15%;
   margin-left: 2rem;
@@ -51,4 +55,84 @@ nav a:hover {
 header div {
   display: flex;
   align-items: center;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 1024px) {
+  header {
+    height: 5.2rem;
+    right: 0;
+  }
+  .site-logo {
+    width: 13%;
+    margin-left: 1rem;
+  }
+
+  .archive,
+  .favourites {
+    font-size: 1.8rem;
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  header {
+    height: 5rem;
+    
+  }
+
+  .site-logo {
+    width: 10%;
+    margin-left: 1rem;
+  }
+
+  .archive,
+  .favourites {
+    font-size: 1.6rem;
+  }
+
+  nav {
+    order: 3;
+    /* width: 100%; */
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  nav a {
+    padding: 5px 10px;
+  }
+
+  .archive,
+  .favourites {
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  header {
+    height: 4rem;
+  }
+
+  .site-logo {
+    width: 20%;
+    /* margin: 0 0 1rem 0; */
+  }
+
+  nav {
+    /* flex-wrap: wrap; */
+    justify-content: center;
+  }
+
+  nav a {
+    padding: 5px 8px;
+    margin-bottom: 0.5rem;
+  }
+
+  .archive,
+  .favourites {
+    font-size: 1.4rem;
+  }
+
+  
 }

@@ -60,7 +60,7 @@ export default function AudioPlayer({
 
       <div className="player-controls">
         <button onClick={togglePlay} className="play-btn">
-          {isPlaying ? 'Pause' : 'Play'}
+          {isPlaying ? "Pause" : "Play"}
         </button>
         <audio
           ref={audioRef}

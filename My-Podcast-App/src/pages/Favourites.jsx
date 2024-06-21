@@ -9,7 +9,6 @@ import Search from "../components/Search";
 export default function Favourites() {
   const [loading, setLoading] = React.useState(true);
   const [favorites, setFavorites] = React.useState([]);
-  const [currentEpisode, setCurrentEpisode] = React.useState(null);
   const [sortedShows, setSortedShows] = React.useState([]);
   const [sortType, setSortType] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -118,7 +117,6 @@ export default function Favourites() {
   const handleSearch = (value) => {
     setSearchTerm(value);
   };
-  
 
   return (
     <div>

@@ -16,7 +16,7 @@ export default function Header() {
 
     return (
         <header>
-            <Link  to="/">
+            <Link  to="/" className="home-link">
                 <img className="site-logo" src={logo} alt={logo} />
             </Link>
 
