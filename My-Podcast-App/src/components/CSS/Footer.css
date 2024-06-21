@@ -1,16 +1,16 @@
 footer {
-    background-color: #161616;
-    color: #aaaaaa;
-    height: 74px;
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    align-items: center;
-    margin-top: auto;
-    font-weight: 500;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    position: static;
-    margin-top: 5rem;
-  }
+  background-color: #161616;
+  color: #aaaaaa;
+  height: 74px;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  font-weight: 500;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: static;
+  margin-top: 5rem;
+}

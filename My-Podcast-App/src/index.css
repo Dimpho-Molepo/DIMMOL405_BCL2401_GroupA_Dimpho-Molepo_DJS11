@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+}
+
+main {
+    margin-left: 5rem;
+    margin-right: 5rem;
+    min-height: 100vh;
+}
