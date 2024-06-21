@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import "./CSS/Home.css"
-import { genreInfo, genresObject } from "../Genre";
+import { genreInfo, genresObject } from "../utils/Genre";
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import CircularProgress from '@mui/material/CircularProgress';
 import Search from "../components/Search"
+import SortButtons from "../utils/SortButtons";
 
 
 export default function Home() {
@@ -96,6 +97,11 @@ export default function Home() {
         setSortShows(sortType);
     };
 
+    const clearSort = () => {
+        setSortShows("");
+        setSortedShows(shows);
+    };
+
     const filteredShows = sortedShows.filter((show) =>
         show.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -163,23 +169,11 @@ export default function Home() {
                 </Box>
 
                 <div className="sort-shows-div">
-
-                    <button className={`sort-button ${sortShows === "A-Z" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("A-Z")}>A-Z</button>
-                    <button className={`sort-button ${sortShows === "Z-A" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("Z-A")}>Z-A</button>
-                    <button className={`sort-button ${sortShows === "Newest" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("Newest")}>Newest</button>
-                    <button className={`sort-button ${sortShows === "Oldest" ? "selected-sort-button" : ""}`} onClick={() => sortShowsBy("Oldest")}>Oldest</button>
-
-                    {sortShows && (
-                        <button
-                            onClick={() => {
-                                setSortShows("");
-                                setSortedShows(shows);
-                            }}
-                            className="clear-button"
-                        >
-                            Clear
-                        </button>
-                    )}
+                    <SortButtons 
+                        sortShows={sortShows}
+                        onSortChange={sortShowsBy}
+                        onClear={clearSort}
+                    />
                 </div>
             </div>
             
